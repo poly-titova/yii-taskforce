@@ -1,0 +1,1 @@
+INSERT INTO cities (﻿city, lat, long) VALUES 
