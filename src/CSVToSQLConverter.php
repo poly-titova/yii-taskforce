@@ -29,13 +29,15 @@ class CSVToSQLConverter
 
         $headerData = implode(', ', $this->getHeaderData());
 
-        $values[] =
-            sprintf(
-                "\t(%s)",
-                implode(', ', array_map(function ($item) {
-                    return "'{$item}'";
-                }, $this->CSVFileObject->fgetcsv(',')))
-            );
+        foreach ($this->getNextLine() as $line) {
+            $values[] =
+                sprintf(
+                    "\t(%s)",
+                    implode(', ', array_map(function ($item) {
+                        return "'{$item}'";
+                    }, $this->CSVFileObject->fgetcsv(',')))
+                );
+        }
 
         print($values);
 
@@ -47,7 +49,7 @@ class CSVToSQLConverter
             throw new TaskForceException('Не удалось создать или записать в файл');
         }
 
-        $SQLFileObject->fwrite("INSERT INTO $newFile ($headerData) VALUES ");
+        $SQLFileObject->fwrite("INSERT INTO $newFile ($headerData) VALUES " . implode(', ', $values) . ";");
     }
 
     public function getHeaderData(): ?array
@@ -55,5 +57,22 @@ class CSVToSQLConverter
         $data = $this->CSVFileObject->fgetcsv();
 
         return $data;
+    }
+
+    public function getNextLine(): ?iterable
+    {
+        $result = null;
+
+        while (!$this->CSVFileObject->eof()) {
+            $line = $this->CSVFileObject->fgetcsv();
+
+            if (empty($line)) {
+                continue;
+            }
+
+            yield $line;
+        }
+
+        return $result;
     }
 }
