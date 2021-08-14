@@ -1,9 +1,12 @@
 <?php
 
 use frontend\models\Tasks;
+use yii\data\ActiveDataProvider;
+use yii\widgets\LinkPager;
 
 /**
  * @param Tasks[] $tasks $pages
+ * @var ActiveDataProvider $dataProvider
  */
 ?>
 
@@ -11,7 +14,7 @@ use frontend\models\Tasks;
     <div class="new-task__wrapper">
         <h1>Новые задания</h1>
         <?php
-        foreach ($tasks as $task) : ?>
+        foreach ($dataProvider->getModels() as $task) : ?>
             <div class="new-task__card">
                 <div class="new-task__title">
                     <a href="#" class="link-regular">
@@ -33,7 +36,7 @@ use frontend\models\Tasks;
     </div>
     <div class="new-task__pagination">
         <ul class="new-task__pagination-list">
-            <?= \yii\widgets\LinkPager::widget(['pagination' => $pages]) ?>
+            <?= LinkPager::widget(['pagination' => $dataProvider->getPagination()]) ?>
         </ul>
     </div>
 </section>
