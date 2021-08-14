@@ -3,7 +3,7 @@
 use frontend\models\Tasks;
 
 /**
- * @param Tasks[] $tasks
+ * @param Tasks[] $tasks $pages
  */
 ?>
 
@@ -15,7 +15,7 @@ use frontend\models\Tasks;
             <div class="new-task__card">
                 <div class="new-task__title">
                     <a href="#" class="link-regular">
-                        <h2><?= $task->title; ?></h2>
+                        <h2><?= $task->name; ?></h2>
                     </a>
                     <a class="new-task__type link-regular" href="#">
                         <p><?= $task->category_id; ?></p>
@@ -25,20 +25,15 @@ use frontend\models\Tasks;
                 <p class="new-task_description">
                     <?= $task->description; ?>
                 </p>
-                <b class="new-task__price new-task__price--translation"><?= $task->price; ?><b> ₽</b></b>
-                <p class="new-task__place">Санкт-Петербург, Центральный район</p>
-                <span class="new-task__time">4 часа назад</span>
+                <b class="new-task__price new-task__price--translation"><?= $task->budget; ?><b> ₽</b></b>
+                <p class="new-task__place"><?= $task->address; ?></p>
+                <span class="new-task__time"><?= $task->dt_add; ?></span>
             </div>
         <?php endforeach; ?>
     </div>
     <div class="new-task__pagination">
         <ul class="new-task__pagination-list">
-            <li class="pagination__item"><a href="#"></a></li>
-            <li class="pagination__item pagination__item--current">
-                <a>1</a></li>
-            <li class="pagination__item"><a href="#">2</a></li>
-            <li class="pagination__item"><a href="#">3</a></li>
-            <li class="pagination__item"><a href="#"></a></li>
+            <?= \yii\widgets\LinkPager::widget(['pagination' => $pages]) ?>
         </ul>
     </div>
 </section>
@@ -77,4 +72,3 @@ use frontend\models\Tasks;
         </form>
     </div>
 </section>
-?>

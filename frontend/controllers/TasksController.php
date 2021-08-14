@@ -2,22 +2,23 @@
 
 namespace frontend\controllers;
 
-use frontend\models\TasksFilter;
+use frontend\models\Tasks;
 use yii\web\Controller;
-use Yii;
 
 class TasksController extends Controller
 {
     public function actionIndex()
     {
-        $formFilter = new TasksFilter();
-        if (Yii::$app->request->isPost) {
-            $formFilter->load(Yii::$app->request->post());
-        }
+        $query = Tasks::find()
+            ->where(['status' => 'new'])
+            ->orderBy('id DESC');
 
-        return $this->render('index', [
-            'provider' => $formFilter->getDataProvider(),
-            'formFilter' => $formFilter,
-        ]);
+        $countQuery = clone $query;
+        $pages = new \yii\data\Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 5]);
+        $models = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+    
+        return $this->render('index', ['tasks' => $models, 'pages' => $pages]);
     }
 }
