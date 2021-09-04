@@ -7,5 +7,5 @@ INSERT INTO users (`email`, `name`, `password`, `dt_add`, `last_visit`, `reviews
 ('fbrookeb@nba.com', 'Felice Brooke', 's9y9Mcfgy1g', '2019-09-27', '2020-05-25', '21', '16', 'Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc.', '4.9', 'Оператор ПК', 'customer'),
 ('hgethingsd@sogou.com', 'Hendrik G`ethings', 'zzN5c4', '2018-11-18', '2020-12-23', '39', '20', 'Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat.', '2.9', 'Курьер', 'executor'),
 ('btanmanf@smh.com.au', 'Bibbie Tanman', '1aukKNEIneq', '2019-05-03', '2020-01-01', '14', '18', 'Pellentesque ultrices mattis odio.', '1.5', 'Ремонт', 'customer'),
-('nculliph@fc2.com', 'Nixie Cullip', '2UdKIR2f', '2019-04-07', '2020-01-01', '3', '21', 'Aliquam erat volutpat. In congue.', '2,7', 'Оператор ПК', 'executor'),
+('nculliph@fc2.com', 'Nixie Cullip', '2UdKIR2f', '2019-04-07', '2020-01-01', '3', '21', 'Aliquam erat volutpat. In congue.', '2.7', 'Оператор ПК', 'executor'),
 ('askurrayj@un.org', 'Al Skurray', 'bL9tAf', '2018-11-25', '2020-01-01', '0', '0', 'Phasellus sit amet erat.', '3.1', 'Курьер', 'customer');
