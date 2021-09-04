@@ -3,11 +3,11 @@
 namespace frontend\models;
 
 /**
- * This is the ActiveQuery class for [[FavoriteUsers]].
+ * This is the ActiveQuery class for [[Opinions]].
  *
- * @see FavoriteUsers
+ * @see Opinions
  */
-class FavoriteUsersQuery extends \yii\db\ActiveQuery
+class OpinionsQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class FavoriteUsersQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return FavoriteUsers[]|array
+     * @return Opinions[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class FavoriteUsersQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return FavoriteUsers|array|null
+     * @return Opinions|array|null
      */
     public function one($db = null)
     {

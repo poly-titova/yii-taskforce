@@ -3,11 +3,11 @@
 namespace frontend\models;
 
 /**
- * This is the ActiveQuery class for [[UserCategories]].
+ * This is the ActiveQuery class for [[Profiles]].
  *
- * @see UserCategories
+ * @see Profiles
  */
-class UserCategoriesQuery extends \yii\db\ActiveQuery
+class ProfilesQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class UserCategoriesQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return UserCategories[]|array
+     * @return Profiles[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class UserCategoriesQuery extends \yii\db\ActiveQuery
 
     /**
      * {@inheritdoc}
-     * @return UserCategories|array|null
+     * @return Profiles|array|null
      */
     public function one($db = null)
     {

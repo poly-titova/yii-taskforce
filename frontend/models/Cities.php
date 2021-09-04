@@ -8,7 +8,9 @@ use Yii;
  * This is the model class for table "cities".
  *
  * @property int $id
- * @property string $city
+ * @property string|null $city
+ * @property string|null $lat
+ * @property string|null $long
  */
 class Cities extends \yii\db\ActiveRecord
 {
@@ -26,9 +28,8 @@ class Cities extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['city'], 'required'],
-            [['city'], 'string', 'max' => 255],
-            [['city'], 'unique'],
+            [['city'], 'string', 'max' => 45],
+            [['lat', 'long'], 'string', 'max' => 15],
         ];
     }
 
@@ -40,6 +41,8 @@ class Cities extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'city' => 'City',
+            'lat' => 'Lat',
+            'long' => 'Long',
         ];
     }
 
