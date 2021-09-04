@@ -13,7 +13,7 @@ use Yii;
  * @property string|null $description
  * @property string|null $status
  * @property string $expire
- * @property string|null $name
+ * @property string $name
  * @property string|null $address
  * @property int $budget
  * @property string|null $lat
@@ -23,6 +23,7 @@ use Yii;
  *
  * @property Categories $category
  * @property Opinions[] $opinions0
+ * @property Replies $replies0
  */
 class Tasks extends \yii\db\ActiveRecord
 {
@@ -41,12 +42,13 @@ class Tasks extends \yii\db\ActiveRecord
     {
         return [
             [['dt_add', 'expire'], 'safe'],
-            [['category_id', 'budget'], 'required'],
+            [['category_id', 'name', 'budget'], 'required'],
             [['category_id', 'budget', 'replies', 'opinions'], 'integer'],
             [['description', 'address'], 'string', 'max' => 255],
             [['status', 'lat', 'long'], 'string', 'max' => 15],
             [['name'], 'string', 'max' => 45],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::className(), 'targetAttribute' => ['category_id' => 'id']],
+            [['replies'], 'exist', 'skipOnError' => true, 'targetClass' => Replies::className(), 'targetAttribute' => ['replies' => 'id']],
         ];
     }
 
@@ -90,6 +92,16 @@ class Tasks extends \yii\db\ActiveRecord
     public function getOpinions0()
     {
         return $this->hasMany(Opinions::className(), ['task_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Replies0]].
+     *
+     * @return \yii\db\ActiveQuery|RepliesQuery
+     */
+    public function getReplies0()
+    {
+        return $this->hasOne(Replies::className(), ['id' => 'replies']);
     }
 
     /**

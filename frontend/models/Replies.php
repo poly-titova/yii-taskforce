@@ -13,6 +13,7 @@ use Yii;
  * @property string|null $description
  * @property int $user_id
  *
+ * @property Tasks[] $tasks
  * @property Users $user
  */
 class Replies extends \yii\db\ActiveRecord
@@ -51,6 +52,16 @@ class Replies extends \yii\db\ActiveRecord
             'description' => 'Description',
             'user_id' => 'User ID',
         ];
+    }
+
+    /**
+     * Gets query for [[Tasks]].
+     *
+     * @return \yii\db\ActiveQuery|TasksQuery
+     */
+    public function getTasks()
+    {
+        return $this->hasMany(Tasks::className(), ['replies' => 'id']);
     }
 
     /**

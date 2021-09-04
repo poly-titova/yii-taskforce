@@ -1,12 +1,10 @@
 <?php
 
-use frontend\models\Tasks;
-use yii\data\ActiveDataProvider;
+use frontend\models\TaskFilter;
 use yii\widgets\ListView;
 
 /**
- * @param Tasks[] $tasks $pages
- * @var ActiveDataProvider $dataProvider
+ * @var TaskFilter $filter
  */
 ?>
 
@@ -14,7 +12,7 @@ use yii\widgets\ListView;
     <div class="new-task__wrapper">
         <h1>Новые задания</h1>
         <?= ListView::widget([
-            'dataProvider' => $dataProvider,
+            'dataProvider' => $filter->getDataProvider(),
             'itemView' => '_task'
         ]); ?>
     </div>

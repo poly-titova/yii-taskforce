@@ -2,21 +2,17 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Tasks;
-use yii\data\ActiveDataProvider;
+use frontend\models\TaskFilter;
 use yii\web\Controller;
+use Yii;
 
 class TasksController extends Controller
 {
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Tasks::find()->where(['status' => 'new'])->orderBy('id DESC'),
-            'pagination' => [
-                'pageSize' => 5,
-            ],
-        ]);
+        $filter = new TaskFilter();
+        $filter->load(Yii::$app->request->get());
     
-        return $this->render('index', ['dataProvider' => $dataProvider]);
+        return $this->render('index', ['filter' => $filter]);
     }
 }
