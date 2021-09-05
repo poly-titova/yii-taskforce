@@ -1,8 +1,17 @@
+<?php
+
+use frontend\models\Tasks;
+
+/**
+ * @param Tasks[] $tasks
+ */
+?>
+
 <section class="new-task">
     <div class="new-task__wrapper">
         <h1>Новые задания</h1>
         <?php
-        foreach ($taskData as $id => $task) : ?>
+        foreach ($tasks as $task) : ?>
             <div class="new-task__card">
                 <div class="new-task__title">
                     <a href="#" class="link-regular">
@@ -68,3 +77,4 @@
         </form>
     </div>
 </section>
+?>

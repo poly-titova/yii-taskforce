@@ -1,6 +1,15 @@
+<?php
+
+use frontend\models\Users;
+
+/**
+ * @param Users[] $users
+ */
+?>
+
 <section class="user__search">
     <?php
-    foreach ($userData as $user) : ?>
+    foreach ($users as $user) : ?>
         <div class="content-view__feedback-card user__search-wrapper">
             <div class="feedback-card__top">
                 <div class="user__search-icon">
