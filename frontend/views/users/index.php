@@ -1,41 +1,18 @@
 <?php
 
-use frontend\models\Users;
+use frontend\models\UserFilter;
+use yii\widgets\ListView;
 
 /**
- * @param Users[] $users
+ * @var UserFilter $filter
  */
 ?>
 
 <section class="user__search">
-    <?php
-    foreach ($users as $user) : ?>
-        <div class="content-view__feedback-card user__search-wrapper">
-            <div class="feedback-card__top">
-                <div class="user__search-icon">
-                    <a href="#"><img src="./img/man-glasses.jpg" width="65" height="65"></a>
-                    <span>17 заданий</span>
-                    <span>6 отзывов</span>
-                </div>
-                <div class="feedback-card__top--name user__search-card">
-                    <p class="link-name"><a href="#" class="link-regular"><?= $user->last_name; ?> <?= $user->first_name; ?></a></p>
-                    <span></span><span></span><span></span><span></span><span class="star-disabled"></span>
-                    <b>4.25</b>
-                    <p class="user__search-content">
-                        Сложно сказать, почему элементы политического процесса лишь
-                        добавляют фракционных разногласий и рассмотрены исключительно
-                        в разрезе маркетинговых и финансовых предпосылок.
-                    </p>
-                </div>
-                <span class="new-task__time">Был на сайте <?= $user->last_activity_at ?> минут назад</span>
-            </div>
-            <div class="link-specialization user__search-link--bottom">
-                <a href="#" class="link-regular">Ремонт</a>
-                <a href="#" class="link-regular">Курьер</a>
-                <a href="#" class="link-regular">Оператор ПК</a>
-            </div>
-        </div>
-    <?php endforeach; ?>
+    <?= ListView::widget([
+        'dataProvider' => $filter->getDataProvider(),
+        'itemView' => '_user'
+    ]); ?>
 </section>
 <section class="search-task">
     <div class="search-task__wrapper">

@@ -26,17 +26,23 @@ CREATE TABLE IF NOT EXISTS `task_force`.`users` (
     `password` VARCHAR(45) NOT NULL,
     `dt_add` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     `last_visit` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    `categories` INT UNSIGNED NOT NULL,
     `reviews` INT DEFAULT NULL,
     `tasks` INT DEFAULT NULL,
     `description` VARCHAR(255) DEFAULT NULL,
     `rate` INT DEFAULT NULL, 
-    `spec` VARCHAR(45) DEFAULT NULL,
-    `role` VARCHAR(15) DEFAULT 'customer' NOT NULL,
+    `role` VARCHAR(15) DEFAULT 'executor' NOT NULL,
+    `favorite` INT DEFAULT 0, 
+
+    FOREIGN KEY (`categories`) REFERENCES `categories` (`id`),
+    FOREIGN KEY (`reviews`) REFERENCES `reviews` (`id`),
+    FOREIGN KEY (`tasks`) REFERENCES `tasks` (`id`),
     PRIMARY KEY (`id`)
 );
 
 CREATE TABLE IF NOT EXISTS `task_force`.`tasks` (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `user_id` INT UNSIGNED NOT NULL,
     `dt_add` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     `category_id` INT UNSIGNED NOT NULL,
     `description` VARCHAR(255) DEFAULT NULL,
@@ -47,10 +53,12 @@ CREATE TABLE IF NOT EXISTS `task_force`.`tasks` (
     `budget` INT NOT NULL,
     `lat` VARCHAR(15) DEFAULT NULL,
     `long` VARCHAR(15) DEFAULT NULL,
-    `replies` INT DEFAULT NULL,
+    `replies` INT UNSIGNED DEFAULT NULL,
     `opinions` INT DEFAULT NULL,
 
+    FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
     FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
+    FOREIGN KEY (`replies`) REFERENCES `replies` (`id`),
     PRIMARY KEY (`id`)
 );
 
@@ -92,11 +100,14 @@ CREATE TABLE IF NOT EXISTS `task_force`.`profiles` (
     PRIMARY KEY (`id`)
 );
 
-CREATE TABLE IF NOT EXISTS `task_force`.`user_spec` (
+CREATE TABLE IF NOT EXISTS `task_force`.`reviews` (
+    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `user_id` INT UNSIGNED NOT NULL,
-    `category_id` INT UNSIGNED NOT NULL,
+    `task_id` INT DEFAULT NULL,
+    `description` VARCHAR(255) DEFAULT NULL,
+    `rate` INT NOT NULL, 
 
     FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-    FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
-    PRIMARY KEY (`user_id`, `category_id`)
+    FOREIGN KEY (`task_id`) REFERENCES `tasks` (`id`),
+    PRIMARY KEY (`user_id`, `task_id`)
 );
