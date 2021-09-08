@@ -12,8 +12,7 @@ use Yii;
  * @property string $icon
  *
  * @property Tasks[] $tasks
- * @property UserSpec[] $userSpecs
- * @property Users[] $users
+ * @property UsersCategories[] $usersCategories
  */
 class Categories extends \yii\db\ActiveRecord
 {
@@ -59,23 +58,13 @@ class Categories extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[UserSpecs]].
+     * Gets query for [[UsersCategories]].
      *
-     * @return \yii\db\ActiveQuery|UserSpecQuery
+     * @return \yii\db\ActiveQuery|UsersCategoriesQuery
      */
-    public function getUserSpecs()
+    public function getUsersCategories()
     {
-        return $this->hasMany(UserSpec::className(), ['category_id' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Users]].
-     *
-     * @return \yii\db\ActiveQuery|UsersQuery
-     */
-    public function getUsers()
-    {
-        return $this->hasMany(Users::className(), ['id' => 'user_id'])->viaTable('user_spec', ['category_id' => 'id']);
+        return $this->hasMany(UsersCategories::className(), ['category_id' => 'id']);
     }
 
     /**

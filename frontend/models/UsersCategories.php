@@ -5,7 +5,7 @@ namespace frontend\models;
 use Yii;
 
 /**
- * This is the model class for table "user_spec".
+ * This is the model class for table "users_categories".
  *
  * @property int $user_id
  * @property int $category_id
@@ -13,14 +13,14 @@ use Yii;
  * @property Categories $category
  * @property Users $user
  */
-class UserSpec extends \yii\db\ActiveRecord
+class UsersCategories extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'user_spec';
+        return 'users_categories';
     }
 
     /**
@@ -31,7 +31,6 @@ class UserSpec extends \yii\db\ActiveRecord
         return [
             [['user_id', 'category_id'], 'required'],
             [['user_id', 'category_id'], 'integer'],
-            [['user_id', 'category_id'], 'unique', 'targetAttribute' => ['user_id', 'category_id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => Users::className(), 'targetAttribute' => ['user_id' => 'id']],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Categories::className(), 'targetAttribute' => ['category_id' => 'id']],
         ];
@@ -70,10 +69,10 @@ class UserSpec extends \yii\db\ActiveRecord
 
     /**
      * {@inheritdoc}
-     * @return UserSpecQuery the active query used by this AR class.
+     * @return UsersCategoriesQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new UserSpecQuery(get_called_class());
+        return new UsersCategoriesQuery(get_called_class());
     }
 }

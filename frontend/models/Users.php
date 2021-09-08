@@ -13,18 +13,22 @@ use Yii;
  * @property string $password
  * @property string $dt_add
  * @property string $last_visit
- * @property int|null $reviews
- * @property int|null $tasks
  * @property string|null $description
- * @property int|null $rate
- * @property string|null $spec
+ * @property string $bd
+ * @property string|null $address
+ * @property string|null $phone
+ * @property string|null $skype
  * @property string $role
+ * @property int|null $rate
+ * @property int|null $favorite
  *
- * @property Categories[] $categories
  * @property Opinions[] $opinions
- * @property Profiles[] $profiles
  * @property Replies[] $replies
- * @property UserSpec[] $userSpecs
+ * @property Reviews[] $reviews
+ * @property Reviews[] $reviews0
+ * @property Tasks[] $tasks
+ * @property Tasks[] $tasks0
+ * @property UsersCategories[] $usersCategories
  */
 class Users extends \yii\db\ActiveRecord
 {
@@ -43,11 +47,12 @@ class Users extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'email', 'password'], 'required'],
-            [['dt_add', 'last_visit'], 'safe'],
-            [['reviews', 'tasks', 'rate'], 'integer'],
-            [['name', 'email', 'password', 'spec'], 'string', 'max' => 45],
-            [['description'], 'string', 'max' => 255],
-            [['role'], 'string', 'max' => 15],
+            [['dt_add', 'last_visit', 'bd'], 'safe'],
+            [['rate', 'favorite'], 'integer'],
+            [['name', 'email', 'password'], 'string', 'max' => 45],
+            [['description', 'address'], 'string', 'max' => 255],
+            [['phone', 'role'], 'string', 'max' => 15],
+            [['skype'], 'string', 'max' => 50],
         ];
     }
 
@@ -63,23 +68,15 @@ class Users extends \yii\db\ActiveRecord
             'password' => 'Password',
             'dt_add' => 'Dt Add',
             'last_visit' => 'Last Visit',
-            'reviews' => 'Reviews',
-            'tasks' => 'Tasks',
             'description' => 'Description',
-            'rate' => 'Rate',
-            'spec' => 'Spec',
+            'bd' => 'Bd',
+            'address' => 'Address',
+            'phone' => 'Phone',
+            'skype' => 'Skype',
             'role' => 'Role',
+            'rate' => 'Rate',
+            'favorite' => 'Favorite',
         ];
-    }
-
-    /**
-     * Gets query for [[Categories]].
-     *
-     * @return \yii\db\ActiveQuery|CategoriesQuery
-     */
-    public function getCategories()
-    {
-        return $this->hasMany(Categories::className(), ['id' => 'category_id'])->viaTable('user_spec', ['user_id' => 'id']);
     }
 
     /**
@@ -93,33 +90,63 @@ class Users extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Profiles]].
-     *
-     * @return \yii\db\ActiveQuery|ProfilesQuery
-     */
-    public function getProfiles()
-    {
-        return $this->hasMany(Profiles::className(), ['user_id' => 'id']);
-    }
-
-    /**
      * Gets query for [[Replies]].
      *
      * @return \yii\db\ActiveQuery|RepliesQuery
      */
     public function getReplies()
     {
-        return $this->hasMany(Replies::className(), ['user_id' => 'id']);
+        return $this->hasMany(Replies::className(), ['executor_id' => 'id']);
     }
 
     /**
-     * Gets query for [[UserSpecs]].
+     * Gets query for [[Reviews]].
      *
-     * @return \yii\db\ActiveQuery|UserSpecQuery
+     * @return \yii\db\ActiveQuery|ReviewsQuery
      */
-    public function getUserSpecs()
+    public function getReviews()
     {
-        return $this->hasMany(UserSpec::className(), ['user_id' => 'id']);
+        return $this->hasMany(Reviews::className(), ['executor_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Reviews0]].
+     *
+     * @return \yii\db\ActiveQuery|ReviewsQuery
+     */
+    public function getReviews0()
+    {
+        return $this->hasMany(Reviews::className(), ['customer_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Tasks]].
+     *
+     * @return \yii\db\ActiveQuery|TasksQuery
+     */
+    public function getTasks()
+    {
+        return $this->hasMany(Tasks::className(), ['executor_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Tasks0]].
+     *
+     * @return \yii\db\ActiveQuery|TasksQuery
+     */
+    public function getTasks0()
+    {
+        return $this->hasMany(Tasks::className(), ['customer_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[UsersCategories]].
+     *
+     * @return \yii\db\ActiveQuery|UsersCategoriesQuery
+     */
+    public function getUsersCategories()
+    {
+        return $this->hasMany(UsersCategories::className(), ['user_id' => 'id']);
     }
 
     /**
