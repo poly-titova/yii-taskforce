@@ -4,7 +4,6 @@ namespace frontend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use yii\db\ActiveQuery;
 
 class TaskFilter extends Model
 {
@@ -16,33 +15,24 @@ class TaskFilter extends Model
 
     public function getDataProvider()
     {
-        $query = Tasks::find()->alias('t')->where(['status' => 'new'])->orderBy('id DESC');
+        $query = Tasks::find()->where(['status' => 'new'])->orderBy('id DESC');
         if ($this->categories) {
             $query->where(['IN', 'category_id', $this->categories]);
         }
 
         if ($this->isRemote) {
-            // $query->where(['IN', 'category_id', $filter->categories]);
-            // REMOTE
+            $query->andWhere(['address' => null]);
         }
 
         if ($this->withoutReplies) {
-            // SELECT * FORM tasks t
-            // LEFT JOIN replies0 r ON r.task_id = t.id
-            $query->joinWith('replies0', function (ActiveQuery $query) {
-                $query->andWhere('COUNT(r.id) = 0');
-            });
+            $query->leftJoin('replis', 'reviews.executer_id = null');
         }
 
         if ($this->period) {
-            // ...
+            $query->andWhere('dt_add > NOW() - INTERVAL :period DAY', [':period' => $this->timePeriod]);
         }
 
-        if ($this->name) {
-            // WHERE name LIKE '%dfvdfv%'
-        }
-
-        $query->groupBy('t.id');
+        $query->andFilterWhere(['Like', 'name', $this->name]);
 
         return new ActiveDataProvider([
             'query' => $query,
