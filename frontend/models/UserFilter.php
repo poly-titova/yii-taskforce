@@ -14,6 +14,18 @@ class UserFilter extends Model
     public $favorite;
     public $name;
 
+    public function attributeLabels()
+    {
+        return [
+            'categories' => 'Категории',
+            'isFree' => 'Сейчас свободен',
+            'isOnline' => 'Сейчас онлайн',
+            'withReviews' => 'Есть отзывы',
+            'favorite' => 'В избранном',
+            'name' => 'Поиск по имени'
+        ];
+    }
+
     public function getDataProvider()
     {
         $query = Users::find()->where(['role' => 'executor'])->orderBy('id DESC');

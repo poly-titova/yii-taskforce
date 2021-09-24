@@ -13,6 +13,30 @@ class TaskFilter extends Model
     public $period;
     public $name;
 
+    public function attributeLabels()
+    {
+        return [
+            'categories' => 'Категории',
+            'isRemote' => 'Удаленная работа',
+            'withoutReplies' => 'Без исполнителя',
+            'period' => 'Период',
+            'name' => 'Поиск по названию'
+        ];
+    }
+
+    const TIME_PERIOD_DAY = 1;
+    const TIME_PERIOD_WEEK = 7;
+    const TIME_PERIOD_MONTH = 30;
+
+    public function getPeriodMap()
+    {
+        return [
+            self::TIME_PERIOD_DAY => 'За день',
+            self::TIME_PERIOD_WEEK => 'За неделю',
+            self::TIME_PERIOD_MONTH => 'За месяц'
+        ];
+    }
+
     public function getDataProvider()
     {
         $query = Tasks::find()->where(['status' => 'new'])->orderBy('id DESC');
@@ -29,7 +53,7 @@ class TaskFilter extends Model
         }
 
         if ($this->period) {
-            $query->andWhere('dt_add > NOW() - INTERVAL :period DAY', [':period' => $this->timePeriod]);
+            $query->andWhere('dt_add > NOW() - INTERVAL :period DAY', [':period' => $this->period]);
         }
 
         $query->andFilterWhere(['Like', 'name', $this->name]);
