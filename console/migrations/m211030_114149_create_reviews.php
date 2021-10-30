@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m211009_173114_reviews
+ * Class m211030_114149_create_reviews
  */
-class m211009_173114_reviews extends Migration
+class m211030_114149_create_reviews extends Migration
 {
     public function up()
     {
@@ -18,7 +18,7 @@ class m211009_173114_reviews extends Migration
         ]);
 
         $this->addForeignKey(
-            'fk_executor_id_users_id',
+            'fk_reviews_executor_id_users_id',
             'reviews',
             'executor_id',
             'users',
@@ -27,7 +27,7 @@ class m211009_173114_reviews extends Migration
         );
 
         $this->addForeignKey(
-            'fk_customer_id_users_id',
+            'fk_reviews_customer_id_users_id',
             'reviews',
             'customer_id',
             'users',

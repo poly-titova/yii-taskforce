@@ -10,12 +10,12 @@ class m211009_161744_create_users_categories extends Migration
     public function up()
     {
         $this->createTable('users_categories', [
-            'user_id' => $this->primaryKey(),
-            'category_id' => $this->primaryKey(),
+            'user_id' => $this->integer()->notNull(),
+            'category_id' => $this->integer()->notNull(),
         ]);
 
         $this->addForeignKey(
-            'fk_user_id_users_id',
+            'fk_users_categories_user_id_users_id',
             'users_categories',
             'user_id',
             'users',
@@ -24,7 +24,7 @@ class m211009_161744_create_users_categories extends Migration
         );
 
         $this->addForeignKey(
-            'fk_category_id_categories_id',
+            'fk_users_categories_category_id_categories_id',
             'users_categories',
             'category_id',
             'categories',
